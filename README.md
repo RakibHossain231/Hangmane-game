@@ -5,13 +5,13 @@ A classic Hangman word guessing game with a modern, mobile-friendly interface. T
 ![Game Preview](1.png)
 
 ## ✨ Features
-| 🎯 **150+ Words** | Extensive vocabulary with 4-6 letter words |
-| 💡 **Smart Hints** | Every word comes with an emoji-enhanced hint |
-| 📱 **Mobile First** | Fully responsive design works on all devices |
-| ⌨️ **QWERTY Keyboard** | Realistic keyboard layout for laptop & mobile |
-| 🎨 **Visual Feedback** | Hangman drawing updates with each wrong guess |
-| 🔄 **Restart Anytime** | New word with a single click |
-| 🎪 **Colorful UI** | Attractive gradient design with smooth animations |
+- 🎯 **150+ Words** | Extensive vocabulary with 4-6 letter words |
+- 💡 **Smart Hints** | Every word comes with an emoji-enhanced hint |
+- 📱 **Mobile First** | Fully responsive design works on all devices |
+- ⌨️ **QWERTY Keyboard** | Realistic keyboard layout for laptop & mobile |
+- 🎨 **Visual Feedback** | Hangman drawing updates with each wrong guess |
+- 🔄 **Restart Anytime** | New word with a single click |
+- 🎪 **Colorful UI** | Attractive gradient design with smooth animations |
 
 ## 🎯 How to Play
 1. **Guess the word** - Try to figure out the hidden word (4-6 letters)
@@ -21,7 +21,7 @@ A classic Hangman word guessing game with a modern, mobile-friendly interface. T
 5. **Win condition** - Guess all letters correctly before the hangman is complete
 
 ## 🚀 Live Demo
-[Play the game here!](https://rakibhossain231hangmangame.vercel.app/))
+[Play the game here!](https://rakibhossain231hangmangame.vercel.app/)
 
 ## 🛠️ Technologies Used
 - **HTML5** - Game structure
@@ -45,7 +45,6 @@ A classic Hangman word guessing game with a modern, mobile-friendly interface. T
 
 ## 📞 Contact
 - Rakib Hossain
-
 - 📧 Email: rakibrazcse@gmail.com
 - 🔗 Portfolio: [Portfolio](https://rakibhossain231.vercel.app/)
 - 🐙 GitHub: @RakibHossain231
