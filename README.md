@@ -2,7 +2,7 @@
 
 A classic Hangman word guessing game with a modern, mobile-friendly interface. Test your vocabulary with 150+ challenging words!
 
-![Game Preview](1.png)
+![Game Preview](ss.png)
 
 ## ✨ Features
 - 🎯 **150+ Words** | Extensive vocabulary with 4-6 letter words |
