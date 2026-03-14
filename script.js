@@ -236,7 +236,7 @@ function checkWin() {
 // End game
 function endGame(win) {
     active = false;
-    messageEl.textContent = win ? '🎉 WINNER!' : `💀 Word was! ${secretWord}`;
+    messageEl.textContent = win ? '🎉 WINNER!' : `💀 Word was!!! "${secretWord}"`;
     document.querySelectorAll('.key-btn').forEach(btn => btn.disabled = true);
     renderWord();
 }
@@ -333,7 +333,7 @@ function newGame() {
     renderWord();
     updateHint();
     updateStatus();
-    messageEl.textContent = '🔤 guess';
+    messageEl.textContent = 'Guess a letter';
 }
 
 // Event listeners
