@@ -1,68 +1,52 @@
-A classic Hangman word guessing game with a modern, mobile-friendly interface. Test your vocabulary with 150+ challenging words across different categories!
+# 🎮 Hangman Game - Interactive Word Guessing
 
+A classic Hangman word guessing game with a modern, mobile-friendly interface. Test your vocabulary with 150+ challenging words!
 
-✨ Features
-🎯 150+ Words - Extensive vocabulary with 4-6 letter words
-💡 Smart Hints - Every word comes with an emoji-enhanced hint
-📱 Mobile First - Fully responsive design works on all devices
-⌨️ QWERTY Keyboard - Realistic keyboard layout for laptop & mobile
-🎨 Visual Feedback - Hangman drawing updates with each wrong guess
-🔄 Restart Anytime - New word with a single click
-🎪 Colorful UI - Attractive gradient design with smooth animations
+![Game Preview](1.png)
 
-🎯 How to Play
-Guess the word - Try to figure out the hidden word (4-6 letters)
-Use hints - Each word comes with a helpful hint (look for 💡)
-One letter at a time - Click on keyboard letters to make guesses
-Wrong guesses - Each wrong guess adds a part to the hangman (max 6)
-Win condition - Guess all letters correctly before the hangman is complete
+## ✨ Features
+| 🎯 **150+ Words** | Extensive vocabulary with 4-6 letter words |
+| 💡 **Smart Hints** | Every word comes with an emoji-enhanced hint |
+| 📱 **Mobile First** | Fully responsive design works on all devices |
+| ⌨️ **QWERTY Keyboard** | Realistic keyboard layout for laptop & mobile |
+| 🎨 **Visual Feedback** | Hangman drawing updates with each wrong guess |
+| 🔄 **Restart Anytime** | New word with a single click |
+| 🎪 **Colorful UI** | Attractive gradient design with smooth animations |
 
-🚀 Live Demo
-Play the game here!
+## 🎯 How to Play
+1. **Guess the word** - Try to figure out the hidden word (4-6 letters)
+2. **Use hints** - Each word comes with a helpful hint (look for 💡)
+3. **One letter at a time** - Click on keyboard letters to make guesses
+4. **Wrong guesses** - Each wrong guess adds a part to the hangman (max 6)
+5. **Win condition** - Guess all letters correctly before the hangman is complete
 
-🛠️ Technologies Used
-HTML5 - Game structure
-CSS3 - Styling with gradients, shadows, and responsive design
-JavaScript - Game logic, word selection, and interactivity
+## 🚀 Live Demo
+[Play the game here!](https://rakibhossain231hangmangame.vercel.app/))
 
+## 🛠️ Technologies Used
+- **HTML5** - Game structure
+- **CSS3** - Styling with gradients, shadows, and responsive design
+- **JavaScript (ES6)** - Game logic, word selection, and interactivity
 
+## 📁 Project Structure
+- hangman-game/
+- │
+- ├── index.html # Main HTML file
+- ├── style.css # All styles and responsive design
+- ├── script.js # Game logic and word database
+- ├── README.md # Project documentation
+- └── 1.png # Game screenshot
 
-📁 Project Structure text
-hangman-game/
-│
-├── index.html          # Main HTML file
-├── style.css           # All styles and responsive design
-├── script.js           # Game logic and word database
-├── README.md           # Project documentation
-└── 1.png               # Game screenshot
+  
+## 📱 Responsive Design
+- **Desktop** - Full keyboard layout
+- **Tablet** - Compact but fully functional
+- **Mobile** - Touch-optimized buttons, no scrolling needed
 
-🎮 Game Preview
-text
-┌───┐
-│   │
-O   │
-/│\  │
-/ \  │
-    │
-════╧══
+## 📞 Contact
+- Rakib Hossain
 
-Word: _ _ _ _ _ _
-Hint: 🍌 yellow curved fruit
-
-📱 Responsive Design
-The game automatically adapts to different screen sizes:
-Desktop - Full keyboard layout
-Tablet - Compact but fully functional
-Mobile - Touch-optimized buttons, no scrolling needed
-
-👏 Acknowledgments
-Inspired by the classic Hangman game
-Emojis provided by Emojipedia
-Fonts from Google Fonts
-
-📞 Contact
-Created by [Rakib Hossain] - feel free to reach out!
-Portfolio: @[Portfolio](https://rakibhossain231.vercel.app/)
-GitHub: @[RakibHossain231](https://github.com/RakibHossain231)
-LinkedIn: @[Rakibhossain231](https://www.linkedin.com/in/rakibhossain231/)
-
+- 📧 Email: rakibrazcse@gmail.com
+- 🔗 Portfolio: [Portfolio](https://rakibhossain231.vercel.app/)
+- 🐙 GitHub: @RakibHossain231
+- 💼 LinkedIn: @Rakibhossain231
