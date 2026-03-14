@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hangman · Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <h1>🔤 HANGMAN</h1>
+            <div class="counter" id="wrongCount">❌0/6</div>
+        </div>
+
+        <!-- Hangman Drawing -->
+        <div class="drawing-area">
+            <pre id="hangmanDrawing" class="hangman-draw"></pre>
+        </div>
+
+        <!-- Word Display -->
+        <div class="word-area">
+            <div id="wordDisplay" class="word-letters"></div>
+            <div class="word-info" id="wordLength"></div>
+        </div>
+
+        <!-- Hint & Guessed Letters -->
+        <div class="hint-row">
+            <div class="hint-bubble">
+                <span class="hint-icon">💡</span>
+                <span id="hintText" class="hint-text">hint</span>
+            </div>
+            <div class="guessed-bubble" id="guessedLetters">⚡</div>
+        </div>
+
+        <!-- Message -->
+        <div class="message-mini" id="messageDisplay">guess a letter</div>
+
+        <!-- QWERTY Keyboard - Real Layout -->
+        <div class="keyboard-container">
+            <!-- Row 1 -->
+            <div class="keyboard-row" id="row1"></div>
+            <!-- Row 2 -->
+            <div class="keyboard-row" id="row2"></div>
+            <!-- Row 3 -->
+            <div class="keyboard-row" id="row3"></div>
+        </div>
+
+        <!-- Restart Button -->
+        <button class="restart-mini" id="restartButton">⟳ new word</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
