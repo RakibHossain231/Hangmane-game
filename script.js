@@ -236,7 +236,7 @@ function checkWin() {
 // End game
 function endGame(win) {
     active = false;
-    messageEl.textContent = win ? '🎉 WINNER!' : `💀 Word waz! ${secretWord}`;
+    messageEl.textContent = win ? '🎉 WINNER!' : `💀 Word was! ${secretWord}`;
     document.querySelectorAll('.key-btn').forEach(btn => btn.disabled = true);
     renderWord();
 }
@@ -256,6 +256,13 @@ function guess(letter) {
         if (checkWin()) endGame(true);
     } else {
         wrong++;
+        
+        // **SHAKE EFFECT**
+        wrongEl.classList.add('shake');
+        setTimeout(() => {
+            wrongEl.classList.remove('shake');
+        }, 300);
+        
         updateStatus();
         if (wrong >= 6) endGame(false);
     }

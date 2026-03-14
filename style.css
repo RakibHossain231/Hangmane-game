@@ -263,3 +263,57 @@ body {
     .word-letters span { min-width: 25px; }
     .key-btn { font-size: 0.9rem; padding: 4px 0; }
 }
+
+/* Shake Animation */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.3s ease-in-out;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    color: #9bb7d1;
+    font-size: 0.8rem;
+    margin-top: 12px;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.powered {
+    opacity: 0.7;
+    font-size: 0.7rem;
+}
+
+.credit {
+    color: #ffd966;
+    font-weight: 700;
+    text-shadow: 0 1px 0 #4a3720;
+    font-size: 0.9rem;
+    background: rgba(0,0,0,0.2);
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid #dba959;
+}
+
+.heart {
+    color: #ff6b6b;
+    animation: heartbeat 1.5s ease infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
