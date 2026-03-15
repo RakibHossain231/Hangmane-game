@@ -389,7 +389,7 @@ function endGame(win) {
         playSound('win');
         
         // 🎉 Celebration vibration - longer and happier!
-        vibrate([500, 200, 300, 200, 500]); 
+        vibrate([300, 200, 300, 200, 500]); 
         // 300ms vibrate, 200ms pause, 300ms vibrate, 200ms pause, 500ms final vibrate
     } else {
         messageEl.textContent = `💀 Word was "${secretWord}"`;
@@ -498,7 +498,7 @@ function newGame() {
     messageEl.textContent = 'Guess a letter';
     
     // Small vibration to indicate new game started
-    vibrate(200);
+    vibrate(50);
 }
 
 // Event listeners
