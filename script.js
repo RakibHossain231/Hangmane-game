@@ -16,7 +16,6 @@ const WORD_WITH_HINTS = [
     { word: 'BOLT', hint: '⚡ lightning fastener' },
     { word: 'CLIP', hint: '📎 holds papers' },
     { word: 'DRIP', hint: '💧 water drop' },
-    { word: 'ECHO', hint: '🔊 sound repeats' },
     { word: 'FROG', hint: '🐸 jumps, croaks' },
     { word: 'GLOW', hint: '✨ soft light' },
     { word: 'HERB', hint: '🌿 cooking plant' },
@@ -165,25 +164,171 @@ const WORD_WITH_HINTS = [
 const uniqueMap = new Map();
 WORD_WITH_HINTS.forEach(item => {
     const w = item.word.toUpperCase();
-    // Only take words with length 4-6
     if (w.length >= 4 && w.length <= 6 && !uniqueMap.has(w)) {
         uniqueMap.set(w, item.hint);
     }
 });
 
 const WORD_LIST = Array.from(uniqueMap.entries()).map(([word, hint]) => ({ word, hint }));
-console.log(`Total words: ${WORD_LIST.length}`); // এখন ১৫০+ শব্দ
+console.log(`Total words: ${WORD_LIST.length}`);
 
-// Hangman stages
-const HANGMAN_STAGES = [
-    "┌───┐\n│   │\n    │\n    │\n    │\n    │\n════╧══",
-    "┌───┐\n│   │\nO   │\n    │\n    │\n    │\n════╧══",
-    "┌───┐\n│   │\nO   │\n│   │\n    │\n    │\n════╧══",
-    "┌───┐\n│   │\nO   │\n/│   │\n    │\n    │\n════╧══",
-    "┌───┐\n│   │\nO   │\n/│\\  │\n    │\n    │\n════╧══",
-    "┌───┐\n│   │\nO   │\n/│\\  │\n/    │\n    │\n════╧══",
-    "┌───┐\n│   │\nO   │\n/│\\  │\n/ \\  │\n    │\n════╧══"
-];
+// ========== SOUND & VIBRATION FUNCTIONS ==========
+// Check if vibration is supported
+function vibrate(pattern) {
+    if (window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate(pattern);
+    }
+}
+
+// Play sound using Web Audio API
+function playSound(type) {
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        if (type === 'wrong') {
+            // Short buzz sound for wrong guess
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.value = 150;
+            gainNode.gain.value = 0.1;
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.15);
+            
+        } else if (type === 'win') {
+            // Happy melody for win
+            const now = audioContext.currentTime;
+            
+            // Play a little victory tune (C-E-G-C)
+            const frequencies = [523.25, 659.25, 783.99, 1046.50];
+            
+            frequencies.forEach((freq, index) => {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.value = 0.1;
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start(now + index * 0.15);
+                osc.stop(now + index * 0.15 + 0.2);
+            });
+            
+        } else if (type === 'lose') {
+            // Sad sound for lose
+            const now = audioContext.currentTime;
+            
+            // Descending sad tone (G-E-C)
+            const frequencies = [392.00, 329.63, 261.63];
+            
+            frequencies.forEach((freq, index) => {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.value = 0.1;
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start(now + index * 0.2);
+                osc.stop(now + index * 0.2 + 0.3);
+            });
+        }
+    } catch (e) {
+        // Browser doesn't support Web Audio API or user interaction required
+        console.log('Sound not supported:', e);
+    }
+}
+
+// ========== SVG Hangman Stages ==========
+function getHangmanSVG(step) {
+    const svgs = [
+        // Step 0 - Empty Gallows
+        `<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="130" width="80" height="5" fill="#8B4513"/>
+            <rect x="35" y="20" width="5" height="110" fill="#8B4513"/>
+            <rect x="35" y="20" width="50" height="5" fill="#8B4513"/>
+            <rect x="80" y="25" width="3" height="20" fill="#A9A9A9"/>
+        </svg>`,
+        // Step 1 - Head
+        `<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="130" width="80" height="5" fill="#8B4513"/>
+            <rect x="35" y="20" width="5" height="110" fill="#8B4513"/>
+            <rect x="35" y="20" width="50" height="5" fill="#8B4513"/>
+            <rect x="80" y="25" width="3" height="20" fill="#A9A9A9"/>
+            <circle cx="81.5" cy="55" r="12" fill="none" stroke="#2C3E50" stroke-width="3"/>
+        </svg>`,
+        // Step 2 - Body
+        `<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="130" width="80" height="5" fill="#8B4513"/>
+            <rect x="35" y="20" width="5" height="110" fill="#8B4513"/>
+            <rect x="35" y="20" width="50" height="5" fill="#8B4513"/>
+            <rect x="80" y="25" width="3" height="20" fill="#A9A9A9"/>
+            <circle cx="81.5" cy="55" r="12" fill="none" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="67" x2="81.5" y2="97" stroke="#2C3E50" stroke-width="3"/>
+        </svg>`,
+        // Step 3 - Left Arm
+        `<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="130" width="80" height="5" fill="#8B4513"/>
+            <rect x="35" y="20" width="5" height="110" fill="#8B4513"/>
+            <rect x="35" y="20" width="50" height="5" fill="#8B4513"/>
+            <rect x="80" y="25" width="3" height="20" fill="#A9A9A9"/>
+            <circle cx="81.5" cy="55" r="12" fill="none" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="67" x2="81.5" y2="97" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="77" x2="61.5" y2="87" stroke="#2C3E50" stroke-width="3"/>
+        </svg>`,
+        // Step 4 - Both Arms
+        `<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="130" width="80" height="5" fill="#8B4513"/>
+            <rect x="35" y="20" width="5" height="110" fill="#8B4513"/>
+            <rect x="35" y="20" width="50" height="5" fill="#8B4513"/>
+            <rect x="80" y="25" width="3" height="20" fill="#A9A9A9"/>
+            <circle cx="81.5" cy="55" r="12" fill="none" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="67" x2="81.5" y2="97" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="77" x2="61.5" y2="87" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="77" x2="101.5" y2="87" stroke="#2C3E50" stroke-width="3"/>
+        </svg>`,
+        // Step 5 - Left Leg
+        `<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="130" width="80" height="5" fill="#8B4513"/>
+            <rect x="35" y="20" width="5" height="110" fill="#8B4513"/>
+            <rect x="35" y="20" width="50" height="5" fill="#8B4513"/>
+            <rect x="80" y="25" width="3" height="20" fill="#A9A9A9"/>
+            <circle cx="81.5" cy="55" r="12" fill="none" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="67" x2="81.5" y2="97" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="77" x2="61.5" y2="87" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="77" x2="101.5" y2="87" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="97" x2="61.5" y2="117" stroke="#2C3E50" stroke-width="3"/>
+        </svg>`,
+        // Step 6 - Complete
+        `<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="130" width="80" height="5" fill="#8B4513"/>
+            <rect x="35" y="20" width="5" height="110" fill="#8B4513"/>
+            <rect x="35" y="20" width="50" height="5" fill="#8B4513"/>
+            <rect x="80" y="25" width="3" height="20" fill="#A9A9A9"/>
+            <circle cx="81.5" cy="55" r="12" fill="none" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="67" x2="81.5" y2="97" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="77" x2="61.5" y2="87" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="77" x2="101.5" y2="87" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="97" x2="61.5" y2="117" stroke="#2C3E50" stroke-width="3"/>
+            <line x1="81.5" y1="97" x2="101.5" y2="117" stroke="#2C3E50" stroke-width="3"/>
+            <circle cx="77" cy="51" r="1.5" fill="#2C3E50"/>
+            <circle cx="86" cy="51" r="1.5" fill="#2C3E50"/>
+            <path d="M77 60 Q81.5 65, 86 60" stroke="#2C3E50" stroke-width="2" fill="none"/>
+        </svg>`
+    ];
+    return svgs[step] || svgs[0];
+}
 
 // Game state
 let currentWord = null;
@@ -194,7 +339,7 @@ let guessed = new Set();
 let active = true;
 
 // DOM elements
-const hangmanEl = document.getElementById('hangmanDrawing');
+const hangmanContainer = document.getElementById('hangmanContainer');
 const wordEl = document.getElementById('wordDisplay');
 const wordLengthEl = document.getElementById('wordLength');
 const hintEl = document.getElementById('hintText');
@@ -221,7 +366,9 @@ function updateHint() {
 
 // Update hangman & status
 function updateStatus() {
-    hangmanEl.textContent = HANGMAN_STAGES[Math.min(wrong, 6)];
+    // Update SVG hangman
+    hangmanContainer.innerHTML = getHangmanSVG(Math.min(wrong, 6));
+    
     wrongEl.textContent = `❌${wrong}/6`;
     
     const arr = Array.from(guessed).sort();
@@ -236,7 +383,22 @@ function checkWin() {
 // End game
 function endGame(win) {
     active = false;
-    messageEl.textContent = win ? '🎉 WINNER!' : `💀 Word was!!! "${secretWord}"`;
+    
+    if (win) {
+        messageEl.textContent = '🎉 WINNER! 🎉';
+        playSound('win');
+        
+        // 🎉 Celebration vibration - longer and happier!
+        vibrate([500, 200, 300, 200, 500]); 
+        // 300ms vibrate, 200ms pause, 300ms vibrate, 200ms pause, 500ms final vibrate
+    } else {
+        messageEl.textContent = `💀 Word was "${secretWord}"`;
+        playSound('lose');
+        
+        // 💀 Game over vibration - long and sad!
+        vibrate(800); // 800ms continuous vibration (double the previous)
+    }
+    
     document.querySelectorAll('.key-btn').forEach(btn => btn.disabled = true);
     renderWord();
 }
@@ -248,7 +410,6 @@ function guess(letter) {
     guessed.add(letter);
     
     if (secretWord.includes(letter)) {
-        // Fill ALL occurrences of the letter
         for (let i = 0; i < secretWord.length; i++) {
             if (secretWord[i] === letter) displayed[i] = letter;
         }
@@ -257,7 +418,11 @@ function guess(letter) {
     } else {
         wrong++;
         
-        // **SHAKE EFFECT**
+        // Wrong guess feedback
+        playSound('wrong');
+        vibrate(50);
+        
+        // Shake effect
         wrongEl.classList.add('shake');
         setTimeout(() => {
             wrongEl.classList.remove('shake');
@@ -287,11 +452,8 @@ function createKeyButton(letter) {
 
 // Build QWERTY keyboard
 function buildKeyboard() {
-    // Row 1: Q W E R T Y U I O P
     const row1Keys = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
-    // Row 2: A S D F G H J K L
     const row2Keys = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
-    // Row 3: Z X C V B N M
     const row3Keys = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
     
     row1.innerHTML = '';
@@ -334,6 +496,9 @@ function newGame() {
     updateHint();
     updateStatus();
     messageEl.textContent = 'Guess a letter';
+    
+    // Small vibration to indicate new game started
+    vibrate(200);
 }
 
 // Event listeners

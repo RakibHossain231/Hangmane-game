@@ -14,9 +14,11 @@
             <div class="counter" id="wrongCount">❌0/6</div>
         </div>
 
-        <!-- Hangman Drawing -->
+        <!-- Hangman Drawing - SVG Container -->
         <div class="drawing-area">
-            <pre id="hangmanDrawing" class="hangman-draw"></pre>
+            <div id="hangmanContainer" class="hangman-svg">
+                <!-- SVG will be injected here -->
+            </div>
         </div>
 
         <!-- Word Display -->
@@ -37,21 +39,19 @@
         <!-- Message -->
         <div class="message-mini" id="messageDisplay">guess a letter</div>
 
-        <!-- QWERTY Keyboard - Real Layout -->
+        <!-- QWERTY Keyboard -->
         <div class="keyboard-container">
-            <!-- Row 1 -->
             <div class="keyboard-row" id="row1"></div>
-            <!-- Row 2 -->
             <div class="keyboard-row" id="row2"></div>
-            <!-- Row 3 -->
             <div class="keyboard-row" id="row3"></div>
         </div>
 
         <!-- Restart Button -->
         <button class="restart-mini" id="restartButton">⟳ new word</button>
+        <!-- Footer-->
         <div class="footer">
             <span class="powered">⚡ powered by</span>
-            <span class="credit" >Rakib</span>
+            <span class="credit">Rakib</span>
         </div>
     </div>
 
